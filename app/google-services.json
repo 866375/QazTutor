@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "864433120678",
+    "project_id": "qaztutor",
+    "storage_bucket": "qaztutor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864433120678:android:aaa0bbee465ccb088a1b67",
+        "android_client_info": {
+          "package_name": "com.example.qaztutor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "864433120678-4gmesinrlkq787sl1m5hegsnic5cg7sk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSAdL_o9NTkEzXDvVKNvLat-v4L5yRLdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "864433120678-4gmesinrlkq787sl1m5hegsnic5cg7sk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
