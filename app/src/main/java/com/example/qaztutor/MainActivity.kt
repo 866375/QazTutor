@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false);
 
+        Toast.makeText(mActivity, "Test", Toast.LENGTH_SHORT).show()
+
 
         mBinding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
