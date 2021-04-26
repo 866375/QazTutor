@@ -1,8 +1,10 @@
 package com.example.qaztutor
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -19,7 +21,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mActivity: Activity
     private lateinit var mToggle: ActionBarDrawerToggle
+    private lateinit var mToolbar: androidx.appcompat.widget.Toolbar
 
+    @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -31,18 +35,16 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
-        mToggle =
-            ActionBarDrawerToggle(mActivity, mBinding.drawerLayout, R.string.open, R.string.close)
-        mBinding.drawerLayout.addDrawerListener(mToggle)
-        mToggle.syncState()
 
-        mToggle.isDrawerIndicatorEnabled = false
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        getSupportActionBar()?.setDisplayShowTitleEnabled(false);
+        mBinding.navHam.setOnClickListener {
+            Toast.makeText(mActivity, "Clicked", Toast.LENGTH_SHORT).show()
+            mBinding.drawerLayout.openDrawer(Gravity.START)
+        }
 
-        Toast.makeText(mActivity, "Test", Toast.LENGTH_SHORT).show()
-
+        mBinding.testBtn.setOnClickListener {
+            Toast.makeText(mActivity, "Clicked", Toast.LENGTH_SHORT).show()
+        }
 
         mBinding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -56,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     "Settings clicked",
                     Toast.LENGTH_SHORT
                 ).show()
+                R.id.navLogout -> logout()
             }
             true
         }
@@ -73,4 +76,12 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun logout() {
+        mAuth.signOut()
+        val intent = Intent(mActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }
