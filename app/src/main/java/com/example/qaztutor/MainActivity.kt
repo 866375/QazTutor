@@ -42,10 +42,6 @@ class MainActivity : AppCompatActivity() {
             mBinding.drawerLayout.openDrawer(Gravity.START)
         }
 
-        mBinding.testBtn.setOnClickListener {
-            Toast.makeText(mActivity, "Clicked", Toast.LENGTH_SHORT).show()
-        }
-
         mBinding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navHome -> Toast.makeText(mActivity, "Home clicked", Toast.LENGTH_SHORT).show()
@@ -68,6 +64,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        mBinding.mainProgressBar.setProgress(56)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
