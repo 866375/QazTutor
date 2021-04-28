@@ -24,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainCourseLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -64,9 +65,9 @@
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="0dp"
                         android:layout_height="8dp"
-                        android:progress="45"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="32dp"
+                        android:progress="85"
                         android:progressDrawable="@drawable/gradient_progressbar"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/mainPercentageTextView"
@@ -104,6 +105,175 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/courseProgressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mainCourseLayout">
+
+
+            <TextView
+                android:id="@+id/readingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Reading:"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/readingProgressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="4dp"
+                android:progress="100"
+                android:progressDrawable="@drawable/gradient_progressbar"
+                app:layout_constraintEnd_toEndOf="@id/readingPercentageTextView"
+                app:layout_constraintStart_toStartOf="@id/readingTextView"
+                app:layout_constraintTop_toBottomOf="@id/readingTextView" />
+
+            <TextView
+                android:id="@+id/readingPercentageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 %"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/vocabularyTextView"
+                app:layout_constraintStart_toEndOf="@+id/readingTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/vocabularyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginLeft="65dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Vocabulary:"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@id/vocabularyPercentageTextView"
+                app:layout_constraintStart_toEndOf="@+id/readingPercentageTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/vocabularyPercentageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:text="100 %"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ProgressBar
+                android:id="@+id/vocabularyProgressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="4dp"
+                android:progress="100"
+                android:progressDrawable="@drawable/gradient_progressbar"
+                app:layout_constraintEnd_toEndOf="@id/vocabularyPercentageTextView"
+                app:layout_constraintStart_toStartOf="@id/vocabularyTextView"
+                app:layout_constraintTop_toBottomOf="@id/vocabularyTextView" />
+
+
+            <TextView
+                android:id="@+id/listeningTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Listening:"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/vocabularyTextView"
+                app:layout_constraintTop_toBottomOf="@id/vocabularyProgressBar" />
+
+            <TextView
+                android:id="@+id/listeningPercentageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 %"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/vocabularyPercentageTextView"
+                app:layout_constraintTop_toBottomOf="@id/vocabularyProgressBar" />
+
+
+            <ProgressBar
+                android:id="@+id/listeningProgressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="4dp"
+                android:progress="100"
+                android:progressDrawable="@drawable/gradient_progressbar"
+                app:layout_constraintEnd_toEndOf="@id/listeningPercentageTextView"
+                app:layout_constraintStart_toStartOf="@id/listeningTextView"
+                app:layout_constraintTop_toBottomOf="@id/listeningTextView" />
+
+            <TextView
+                android:id="@+id/grammerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Grammer:"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/readingTextView"
+                app:layout_constraintTop_toBottomOf="@id/readingProgressBar" />
+
+            <TextView
+                android:id="@+id/grammerPercentageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="80%"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/readingPercentageTextView"
+                app:layout_constraintTop_toBottomOf="@id/readingProgressBar" />
+
+            <ProgressBar
+                android:id="@+id/grammerProgressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="4dp"
+                android:progress="100"
+                android:progressDrawable="@drawable/gradient_progressbar"
+                app:layout_constraintEnd_toEndOf="@id/grammerPercentageTextView"
+                app:layout_constraintStart_toStartOf="@id/grammerTextView"
+                app:layout_constraintTop_toBottomOf="@id/grammerTextView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/courseProgressLayout"
+            tools:ignore="MissingClass" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

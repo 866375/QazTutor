@@ -10,6 +10,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.qaztutor.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -22,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mActivity: Activity
     private lateinit var mToggle: ActionBarDrawerToggle
     private lateinit var mToolbar: androidx.appcompat.widget.Toolbar
-
+    private lateinit var mFragment: Fragment
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,21 +37,39 @@ class MainActivity : AppCompatActivity() {
         mActivity = this
 
         mAuth = FirebaseAuth.getInstance()
-
-
+        checkUser()
 
         mBinding.navHam.setOnClickListener {
-            Toast.makeText(mActivity, "Clicked", Toast.LENGTH_SHORT).show()
             mBinding.drawerLayout.openDrawer(Gravity.START)
         }
 
+        mFragment = HomeFragment()
+        addFragmentToActivity(mFragment)
+
+
         mBinding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.navHome -> Toast.makeText(mActivity, "Home clicked", Toast.LENGTH_SHORT).show()
+                R.id.navHome -> {
+                    if(mFragment.equals(HomeFragment)){
+                        mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    }else{
+                        mFragment = HomeFragment()
+                        addFragmentToActivity(mFragment)
+                        mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                }
+
                 R.id.navAccount -> Toast.makeText(mActivity, "Account clicked", Toast.LENGTH_SHORT)
                     .show()
-                R.id.navCourses -> Toast.makeText(mActivity, "Courses clicked", Toast.LENGTH_SHORT)
-                    .show()
+                R.id.navCourses -> {
+                    if(mFragment.equals(CoursesFragment)){
+                        mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    }else{
+                        mFragment = CoursesFragment()
+                        addFragmentToActivity(mFragment)
+                        mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                }
                 R.id.navSettings -> Toast.makeText(
                     mActivity,
                     "Settings clicked",
@@ -59,11 +80,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        if (mAuth.currentUser == null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         mBinding.mainProgressBar.setProgress(56)
     }
@@ -80,6 +96,31 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(mActivity, LoginActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun checkUser() {
+        if (mAuth.currentUser == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    private fun addFragmentToActivity(fragment: Fragment?){
+        if (fragment == null) return
+        val fm = supportFragmentManager
+        val tr = fm.beginTransaction()
+        tr.replace(R.id.frameLayout, fragment)
+        tr.commitAllowingStateLoss()
+        mFragment = fragment
     }
 
 }
