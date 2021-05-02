@@ -11,4 +11,8 @@
     <color name="themeColor">#3D3BFF</color>
     <color name="secondColor">#0C0B62</color>
 
+    <color name="listening_background_color">#E0E0FA</color>
+    <color name="grammar_background_color">#ECBCC2</color>
+
+
 </resources>

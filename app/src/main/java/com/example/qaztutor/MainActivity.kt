@@ -12,8 +12,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.qaztutor.databinding.ActivityMainBinding
+import com.example.qaztutor.ui.auth.LoginActivity
+import com.example.qaztutor.ui.fragments.CoursesFragment
+import com.example.qaztutor.ui.fragments.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mToggle: ActionBarDrawerToggle
     private lateinit var mToolbar: androidx.appcompat.widget.Toolbar
     private lateinit var mFragment: Fragment
+
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         mBinding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navHome -> {
-                    if(mFragment.equals(HomeFragment)){
+                    if (mFragment.equals(HomeFragment)) {
                         mBinding.drawerLayout.closeDrawer(GravityCompat.START)
-                    }else{
+                    } else {
                         mFragment = HomeFragment()
                         addFragmentToActivity(mFragment)
                         mBinding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -62,9 +65,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.navAccount -> Toast.makeText(mActivity, "Account clicked", Toast.LENGTH_SHORT)
                     .show()
                 R.id.navCourses -> {
-                    if(mFragment.equals(CoursesFragment)){
+                    if (mFragment.equals(CoursesFragment)) {
                         mBinding.drawerLayout.closeDrawer(GravityCompat.START)
-                    }else{
+                    } else {
                         mFragment = CoursesFragment()
                         addFragmentToActivity(mFragment)
                         mBinding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -114,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addFragmentToActivity(fragment: Fragment?){
+    private fun addFragmentToActivity(fragment: Fragment?) {
         if (fragment == null) return
         val fm = supportFragmentManager
         val tr = fm.beginTransaction()
