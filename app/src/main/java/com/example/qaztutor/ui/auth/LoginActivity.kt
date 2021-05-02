@@ -1,4 +1,4 @@
-package com.example.qaztutor
+package com.example.qaztutor.ui.auth
 
 import android.app.Activity
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.qaztutor.MainActivity
 import com.example.qaztutor.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
