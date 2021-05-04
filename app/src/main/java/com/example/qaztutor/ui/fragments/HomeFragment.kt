@@ -100,7 +100,6 @@ class HomeFragment : Fragment() {
     }
 
     fun setUpUncompletedTasksRecyclerView(task: List<Task>) {
-
         val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
         var mUncompletedTasksAdapter = UncompletedTasksAdapter(task)
         mBinding.uncompletedTasksRecyclerView.layoutManager = layoutManager

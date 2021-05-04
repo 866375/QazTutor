@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QazTutor">
+        <activity android:name=".ui.activities.LessonsActivity"></activity>
         <activity
             android:name=".ui.auth.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
