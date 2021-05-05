@@ -10,22 +10,21 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qaztutor.MainActivity
 import com.example.qaztutor.R
-import com.example.qaztutor.adapters.UnitAdapter
-import com.example.qaztutor.databinding.ActivityLessonsBinding
+import com.example.qaztutor.databinding.ActivityLessonViewBinding
 import com.example.qaztutor.models.TestUnit
 
-class LessonsActivity : AppCompatActivity() {
-    private lateinit var mBinding: ActivityLessonsBinding
+class LessonViewActivity : AppCompatActivity() {
+    private lateinit var mBinding: ActivityLessonViewBinding
     private lateinit var mActivity: Activity
     private lateinit var mToggle: ActionBarDrawerToggle
+    private lateinit var mToolbar: androidx.appcompat.widget.Toolbar
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityLessonsBinding.inflate(layoutInflater)
+        mBinding = ActivityLessonViewBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         mActivity = this
@@ -37,21 +36,21 @@ class LessonsActivity : AppCompatActivity() {
         mBinding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navHome -> {
+                    mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    finishAffinity()
                     var intent = Intent(mActivity, MainActivity::class.java)
                     intent.putExtra("fragment_id", "home")
-                    mBinding.drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.navAccount -> Toast.makeText(mActivity, "Account clicked", Toast.LENGTH_SHORT)
                     .show()
                 R.id.navCourses -> {
+                    mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    finishAffinity()
                     var intent = Intent(mActivity, MainActivity::class.java)
                     intent.putExtra("fragment_id", "courses")
-                    mBinding.drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(intent)
-                    finish()
                 }
                 R.id.navSettings -> Toast.makeText(
                     mActivity,
@@ -62,26 +61,10 @@ class LessonsActivity : AppCompatActivity() {
             true
         }
 
-        val test_unit = ArrayList<TestUnit>()
-        test_unit.add(TestUnit("1", "Фонетика"))
-        test_unit.add(TestUnit("2", "Буын және оның түрлері"))
-        test_unit.add(TestUnit("3", "Фонетикалық талдау"))
-        test_unit.add(TestUnit("4", "Тасымал"))
-        test_unit.add(TestUnit("5", "Үндестік заңы"))
-        test_unit.add(TestUnit("6", "Орфография "))
-        val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
-        val unitAdapter = UnitAdapter(test_unit)
-        mBinding.unitRecyclerView.layoutManager = layoutManager
-        mBinding.unitRecyclerView.setHasFixedSize(true)
-        mBinding.unitRecyclerView.adapter = unitAdapter
-
-        unitAdapter.onItemClick = {
-            var intent = Intent(mActivity, LessonViewActivity::class.java)
-            intent.putExtra("unit", it)
-            startActivity(intent)
-        }
-
-
+        val testUnit = intent.getSerializableExtra("unit") as TestUnit
+        mBinding.unitNumberTextView.setText(testUnit.id)
+        mBinding.unitTitleTextView.setText(testUnit.title)
+        mBinding.contentTextView.setText(testUnit.text)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

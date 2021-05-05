@@ -42,12 +42,20 @@ class MainActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         checkUser()
 
-        mBinding.navHam.setOnClickListener {
+        mBinding.toolBar.navHam.setOnClickListener {
             mBinding.drawerLayout.openDrawer(Gravity.START)
         }
 
-        mFragment = HomeFragment()
-        addFragmentToActivity(mFragment)
+        if (intent.getStringExtra("fragment_id") == "home") {
+            mFragment = HomeFragment()
+            addFragmentToActivity(mFragment)
+        } else if (intent.getStringExtra("fragment_id") == "courses") {
+            mFragment = CoursesFragment()
+            addFragmentToActivity(mFragment)
+        } else {
+            mFragment = HomeFragment()
+            addFragmentToActivity(mFragment)
+        }
 
 
         mBinding.navView.setNavigationItemSelectedListener {
