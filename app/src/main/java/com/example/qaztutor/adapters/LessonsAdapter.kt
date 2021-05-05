@@ -31,12 +31,12 @@ class LessonsAdapter(private val lessons: List<Lesson>) :
         RecyclerView.ViewHolder(mBinding.root) {
 
         fun bind(lesson: Lesson) {
-            if (lesson.type.equals(Constants.listening)) {
-                Glide.with(mContext).load(R.drawable.listening_lesson_img)
-                    .into(mBinding.lessonImageView)
-            } else {
-                // other conditions
-            }
+//            if (lesson.type.equals(Constants.listening)) {
+//                Glide.with(mContext).load(R.drawable.listening_lesson_img)
+//                    .into(mBinding.lessonImageView)
+//            } else {
+//                // other conditions
+//            }
 
             if (lesson.completed) {
                 mBinding.completedTextView.setText("Completed")
@@ -44,7 +44,7 @@ class LessonsAdapter(private val lessons: List<Lesson>) :
                 mBinding.completedTextView.setText("In Progress")
             }
 
-            mBinding.lessonTitleTextView.setText(lesson.title)
+            mBinding.lessonTitleTextView.setText("Listening")
         }
 
     }

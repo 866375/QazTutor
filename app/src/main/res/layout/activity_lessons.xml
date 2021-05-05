@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.LessonsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolBar"
+            layout="@layout/toolbar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolBar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/labelLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/backImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="48dp"
+                        android:src="@drawable/arrow_back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/lessonsLabelTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Lessons"
+                        android:textColor="@color/secondColor"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="@id/backImageView"
+                        app:layout_constraintStart_toEndOf="@id/backImageView"
+                        app:layout_constraintTop_toTopOf="@+id/backImageView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/labelLayout">
+
+                    <TextView
+                        android:id="@+id/unitTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Unit 1"
+                        android:textColor="@color/secondColor"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/taskLabelTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Tasks: 20"
+                        android:textColor="@color/secondColor"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="@id/unitTextView"
+                        app:layout_constraintStart_toStartOf="@id/unitTextView"
+                        app:layout_constraintTop_toBottomOf="@id/unitTextView" />
+
+                    <ImageView
+                        android:id="@+id/ellipseProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ellipse"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/taskLabelTextView" />
+
+                    <ImageView
+                        android:id="@+id/red_ellipse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginTop="48dp"
+                        android:src="@drawable/red_ellipse"
+                        app:layout_constraintLeft_toRightOf="@id/ellipseProgressBar"
+                        app:layout_constraintTop_toBottomOf="@id/taskLabelTextView" />
+
+                    <TextView
+                        android:id="@+id/not_completedTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="67% not complited"
+                        android:textColor="@color/secondColor"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@id/red_ellipse"
+                        app:layout_constraintLeft_toRightOf="@id/red_ellipse"
+                        app:layout_constraintTop_toTopOf="@id/red_ellipse" />
+
+                    <ImageView
+                        android:id="@+id/blue_ellipse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/blue_ellipse"
+                        app:layout_constraintLeft_toRightOf="@id/ellipseProgressBar"
+                        app:layout_constraintTop_toBottomOf="@id/red_ellipse" />
+
+                    <TextView
+                        android:id="@+id/completedTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="33% successfully completed"
+                        android:textColor="@color/secondColor"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@id/blue_ellipse"
+                        app:layout_constraintLeft_toRightOf="@id/blue_ellipse"
+                        app:layout_constraintTop_toTopOf="@id/blue_ellipse" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/unitRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ellipseProgressBar"
+                        tools:listitem="@layout/unit_raw" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:itemHorizontalPadding="40dp"
+        app:itemTextAppearance="@style/TextViewStyle"
+        app:itemTextColor="@color/secondColor"
+        app:menu="@menu/nav_drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
