@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,8 @@ class LessonsActivity : AppCompatActivity() {
 
         mActivity = this
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         mBinding.toolBar.navHam.setOnClickListener {
             mBinding.drawerLayout.openDrawer(Gravity.START)
         }
@@ -44,8 +47,12 @@ class LessonsActivity : AppCompatActivity() {
                     finish()
                 }
 
-                R.id.navAccount -> Toast.makeText(mActivity, "Account clicked", Toast.LENGTH_SHORT)
-                    .show()
+                R.id.navAccount -> {
+                    var intent = Intent(mActivity, AccountActivity::class.java)
+                    startActivity(intent)
+                    mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    finish()
+                }
                 R.id.navCourses -> {
                     var intent = Intent(mActivity, MainActivity::class.java)
                     intent.putExtra("fragment_id", "courses")
@@ -61,6 +68,8 @@ class LessonsActivity : AppCompatActivity() {
             }
             true
         }
+
+        mBinding.backImageView.setOnClickListener { onBackPressed() }
 
         val test_unit = ArrayList<TestUnit>()
         test_unit.add(TestUnit("1", "Фонетика"))

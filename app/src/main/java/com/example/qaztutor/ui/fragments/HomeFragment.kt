@@ -1,6 +1,7 @@
 package com.example.qaztutor.ui.fragments
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qaztutor.adapters.LessonsAdapter
-import com.example.qaztutor.adapters.UncompletedTasksAdapter
+import com.example.qaztutor.adapters.TasksAdapter
 import com.example.qaztutor.databinding.FragmentHomeBinding
 import com.example.qaztutor.models.Lesson
 import com.example.qaztutor.models.Task
+import com.example.qaztutor.ui.activities.LessonsActivity
+import com.example.qaztutor.ui.activities.TaskActivity
 import com.example.qaztutor.util.Constants
 
 private const val ARG_PARAM1 = "param1"
@@ -24,6 +27,8 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
     private lateinit var mBinding: FragmentHomeBinding
     private lateinit var mActivity: Activity
+    private lateinit var mLessonsAdapter: LessonsAdapter
+    private lateinit var mUncompletedTasksAdapter: TasksAdapter
 
     override
 
@@ -48,7 +53,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mActivity = activity!!
 
-
+        //test data
         val test_task_data = ArrayList<Task>()
         for (i: Int in 1..10) {
             var task = Task()
@@ -65,6 +70,7 @@ class HomeFragment : Fragment() {
 
         setUpUncompletedTasksRecyclerView(test_task_data)
 
+        //test data
         val test_lessons_data = ArrayList<Lesson>()
         for (i: Int in 1..6) {
             var lesson = Lesson()
@@ -75,6 +81,18 @@ class HomeFragment : Fragment() {
         }
 
         setUpLessonsRecyclerView(test_lessons_data)
+
+        mLessonsAdapter.onItemClick = {
+            var intent = Intent(mActivity, LessonsActivity::class.java)
+            //intent.putExtra("lesson", it)
+            startActivity(intent)
+        }
+
+        mUncompletedTasksAdapter.onItemClick = {
+            var intent = Intent(mActivity, TaskActivity::class.java)
+            //intent.putExtra("task", it)
+            startActivity(intent)
+        }
 
     }
 
@@ -101,7 +119,7 @@ class HomeFragment : Fragment() {
 
     fun setUpUncompletedTasksRecyclerView(task: List<Task>) {
         val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
-        var mUncompletedTasksAdapter = UncompletedTasksAdapter(task)
+        mUncompletedTasksAdapter = TasksAdapter(task)
         mBinding.uncompletedTasksRecyclerView.layoutManager = layoutManager
         mBinding.uncompletedTasksRecyclerView.setHasFixedSize(true)
         mBinding.uncompletedTasksRecyclerView.adapter = mUncompletedTasksAdapter
@@ -109,7 +127,7 @@ class HomeFragment : Fragment() {
 
     private fun setUpLessonsRecyclerView(lessons: ArrayList<Lesson>) {
         val layoutManager = GridLayoutManager(mActivity, 2)
-        val mLessonsAdapter = LessonsAdapter(lessons)
+        mLessonsAdapter = LessonsAdapter(lessons)
         mBinding.lessonsRecyclerView.layoutManager = layoutManager
         mBinding.lessonsRecyclerView.setHasFixedSize(true)
         mBinding.lessonsRecyclerView.adapter = mLessonsAdapter

@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -13,11 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.qaztutor.MainActivity
 import com.example.qaztutor.R
-import com.example.qaztutor.databinding.ActivityLessonViewBinding
-import com.example.qaztutor.models.TestUnit
+import com.example.qaztutor.databinding.ActivityTaskBinding
 
-class LessonViewActivity : AppCompatActivity() {
-    private lateinit var mBinding: ActivityLessonViewBinding
+class TaskActivity : AppCompatActivity() {
+
+    private lateinit var mBinding: ActivityTaskBinding
     private lateinit var mActivity: Activity
     private lateinit var mToggle: ActionBarDrawerToggle
     private lateinit var mToolbar: androidx.appcompat.widget.Toolbar
@@ -25,7 +24,7 @@ class LessonViewActivity : AppCompatActivity() {
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityLessonViewBinding.inflate(layoutInflater)
+        mBinding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         mActivity = this
@@ -41,7 +40,6 @@ class LessonViewActivity : AppCompatActivity() {
                 R.id.navHome -> {
                     mBinding.drawerLayout.closeDrawer(GravityCompat.START)
                     finishAffinity()
-                    overridePendingTransition(0,0)
                     var intent = Intent(mActivity, MainActivity::class.java)
                     intent.putExtra("fragment_id", "home")
                     startActivity(intent)
@@ -56,7 +54,6 @@ class LessonViewActivity : AppCompatActivity() {
                 R.id.navCourses -> {
                     mBinding.drawerLayout.closeDrawer(GravityCompat.START)
                     finishAffinity()
-                    overridePendingTransition(0,0)
                     var intent = Intent(mActivity, MainActivity::class.java)
                     intent.putExtra("fragment_id", "courses")
                     startActivity(intent)
@@ -70,25 +67,5 @@ class LessonViewActivity : AppCompatActivity() {
             true
         }
 
-        val testUnit = intent.getSerializableExtra("unit") as TestUnit
-        mBinding.unitNumberTextView.setText(testUnit.id)
-        mBinding.unitTitleTextView.setText(testUnit.title)
-        mBinding.contentTextView.setText(testUnit.text)
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (mToggle.onOptionsItemSelected(item)) {
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackPressed() {
-        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mBinding.drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
 }

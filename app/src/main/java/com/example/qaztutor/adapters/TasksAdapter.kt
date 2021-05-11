@@ -4,14 +4,15 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.qaztutor.R
 import com.example.qaztutor.databinding.UncompletedTasksRawBinding
 import com.example.qaztutor.models.Task
-import com.example.qaztutor.util.Constants
 
 
-class UncompletedTasksAdapter(private val tasks: List<Task>) :
-    RecyclerView.Adapter<UncompletedTasksAdapter.ViewHolder>() {
+class TasksAdapter(private val tasks: List<Task>) :
+    RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
+
+    var onItemClick: ((Task) -> Unit)? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val mBinding =
@@ -27,7 +28,7 @@ class UncompletedTasksAdapter(private val tasks: List<Task>) :
         return tasks.size
     }
 
-    class ViewHolder(private val mBinding: UncompletedTasksRawBinding) :
+    inner class ViewHolder(private val mBinding: UncompletedTasksRawBinding) :
         RecyclerView.ViewHolder(mBinding.root) {
 
         @SuppressLint("ResourceAsColor")
@@ -40,6 +41,12 @@ class UncompletedTasksAdapter(private val tasks: List<Task>) :
 //                } else if (task.type.equals(Constants.grammar)) {
 //                    mBinding.cardView.setBackgroundResource(R.color.grammar_background_color)
 //                }
+            }
+        }
+
+        init {
+            mBinding.root.setOnClickListener {
+                onItemClick?.invoke(tasks[adapterPosition])
             }
         }
 
