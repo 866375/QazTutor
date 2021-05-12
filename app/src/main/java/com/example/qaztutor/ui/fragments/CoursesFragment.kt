@@ -1,6 +1,7 @@
 package com.example.qaztutor.ui.fragments
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qaztutor.adapters.CoursesAdapter
 import com.example.qaztutor.databinding.FragmentCoursesBinding
 import com.example.qaztutor.models.Course
+import com.example.qaztutor.ui.activities.CourseViewActivity
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -20,6 +22,7 @@ class CoursesFragment : Fragment() {
     private var param2: String? = null
     private lateinit var mBinding: FragmentCoursesBinding
     private lateinit var mActivity: Activity
+    private lateinit var mCoursesAdapter: CoursesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,15 +73,20 @@ class CoursesFragment : Fragment() {
         }
 
         setUpCoursesRecyclerView(courses_test_data)
+        mCoursesAdapter.onItemClick = {
+            var intent = Intent(mActivity, CourseViewActivity::class.java)
+            //intent.putExtra("lesson", it)
+            startActivity(intent)
+        }
 
 
     }
 
     fun setUpCoursesRecyclerView(courses: List<Course>) {
         val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
-        var coursesAdapter = CoursesAdapter(courses)
+        mCoursesAdapter = CoursesAdapter(courses)
         mBinding.coursesRecyclerView.layoutManager = layoutManager
         mBinding.coursesRecyclerView.setHasFixedSize(true)
-        mBinding.coursesRecyclerView.adapter = coursesAdapter
+        mBinding.coursesRecyclerView.adapter = mCoursesAdapter
     }
 }

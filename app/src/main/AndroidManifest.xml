@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QazTutor">
-        <activity android:name=".ui.activities.AccountActivity"></activity>
+        <activity android:name=".ui.activities.CourseViewActivity"></activity>
+        <activity android:name=".ui.activities.AccountActivity" />
         <activity android:name=".ui.activities.TaskActivity" />
         <activity android:name=".ui.activities.LessonViewActivity" />
         <activity android:name=".ui.activities.LessonsActivity" />
