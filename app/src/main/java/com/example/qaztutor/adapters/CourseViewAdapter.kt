@@ -3,16 +3,17 @@ package com.example.qaztutor.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.qaztutor.databinding.CoursesRawBinding
+import com.example.qaztutor.databinding.CourseViewRawItemBinding
 import com.example.qaztutor.models.Course
 
-class CoursesAdapter(private val courses: List<Course>) :
-    RecyclerView.Adapter<CoursesAdapter.ViewHolder>() {
+class CourseViewAdapter(private val courses: List<Course>) :
+    RecyclerView.Adapter<CourseViewAdapter.ViewHolder>() {
 
     var onItemClick: ((Course) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = CoursesRawBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            CourseViewRawItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -24,7 +25,7 @@ class CoursesAdapter(private val courses: List<Course>) :
         return courses.size
     }
 
-    inner class ViewHolder(private val mBinding: CoursesRawBinding) :
+    inner class ViewHolder(private val mBinding: CourseViewRawItemBinding) :
         RecyclerView.ViewHolder(mBinding.root) {
 
         fun bind(course: Course) {

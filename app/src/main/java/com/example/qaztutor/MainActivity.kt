@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.qaztutor.databinding.ActivityMainBinding
+import com.example.qaztutor.ui.activities.AccountActivity
 import com.example.qaztutor.ui.auth.LoginActivity
 import com.example.qaztutor.ui.fragments.CoursesFragment
 import com.example.qaztutor.ui.fragments.HomeFragment
@@ -70,8 +71,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                R.id.navAccount -> Toast.makeText(mActivity, "Account clicked", Toast.LENGTH_SHORT)
-                    .show()
+                R.id.navAccount -> {
+                    var intent = Intent(mActivity, AccountActivity::class.java)
+                    startActivity(intent)
+                    mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
                 R.id.navCourses -> {
                     if (mFragment.equals(CoursesFragment)) {
                         mBinding.drawerLayout.closeDrawer(GravityCompat.START)

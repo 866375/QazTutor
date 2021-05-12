@@ -4,15 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.qaztutor.R
 import com.example.qaztutor.databinding.LessonsRawBinding
 import com.example.qaztutor.models.Lesson
-import com.example.qaztutor.util.Constants
 
 class LessonsAdapter(private val lessons: List<Lesson>) :
     RecyclerView.Adapter<LessonsAdapter.ViewHolder>() {
 
+    var onItemClick: ((Lesson) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LessonsRawBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,7 +25,7 @@ class LessonsAdapter(private val lessons: List<Lesson>) :
         return lessons.size
     }
 
-    class ViewHolder(private val mBinding: LessonsRawBinding, private val mContext: Context) :
+    inner class ViewHolder(private val mBinding: LessonsRawBinding, private val mContext: Context) :
         RecyclerView.ViewHolder(mBinding.root) {
 
         fun bind(lesson: Lesson) {
@@ -45,6 +43,12 @@ class LessonsAdapter(private val lessons: List<Lesson>) :
             }
 
             mBinding.lessonTitleTextView.setText("Listening")
+        }
+
+        init {
+            mBinding.root.setOnClickListener {
+                onItemClick?.invoke(lessons[adapterPosition])
+            }
         }
 
     }

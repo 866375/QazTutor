@@ -23,6 +23,8 @@ class RegisterActivity : AppCompatActivity() {
         mBinding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         mActivity = this
         mAuth = FirebaseAuth.getInstance()
 
@@ -55,7 +57,8 @@ class RegisterActivity : AppCompatActivity() {
                     goMainActivity()
                 } else {
                     Log.i(TAG, task.exception.toString())
-                    Toast.makeText(mActivity, "Registration failed from here", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mActivity, "Registration failed from here", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
