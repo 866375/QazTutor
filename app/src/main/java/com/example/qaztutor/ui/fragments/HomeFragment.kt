@@ -3,6 +3,7 @@ package com.example.qaztutor.ui.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +13,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qaztutor.adapters.LessonsAdapter
 import com.example.qaztutor.adapters.TasksAdapter
 import com.example.qaztutor.databinding.FragmentHomeBinding
+import com.example.qaztutor.models.Course
 import com.example.qaztutor.models.Lesson
 import com.example.qaztutor.models.Task
+import com.example.qaztutor.network.RetrofitClient
 import com.example.qaztutor.ui.activities.LessonsActivity
 import com.example.qaztutor.ui.activities.TaskActivity
 import com.example.qaztutor.util.Constants
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val TAG = "HomeFragment"
 
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -82,30 +89,55 @@ class HomeFragment : Fragment() {
 
         setUpLessonsRecyclerView(test_lessons_data)
 
-        mLessonsAdapter.onItemClick = {
-            var intent = Intent(mActivity, LessonsActivity::class.java)
-            //intent.putExtra("lesson", it)
-            startActivity(intent)
-        }
+
+        RetrofitClient.instance.getAllCourses().enqueue(object : Callback<List<Course>> {
+            override fun onResponse(
+                call: Call<List<Course>>,
+                response: Response<List<Course>>
+            ) {
+
+            }
+
+            override fun onFailure(call: Call<List<Course>>, t: Throwable) {
+                Log.i(TAG, "onFailure: " + t.message)
+            }
+
+        })
+
+
+    }
+
+
+    fun setUpUncompletedTasksRecyclerView(task: List<Task>) {
+        val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
+        mUncompletedTasksAdapter = TasksAdapter(task)
+        mBinding.uncompletedTasksRecyclerView.layoutManager = layoutManager
+        mBinding.uncompletedTasksRecyclerView.setHasFixedSize(true)
+        mBinding.uncompletedTasksRecyclerView.adapter = mUncompletedTasksAdapter
 
         mUncompletedTasksAdapter.onItemClick = {
             var intent = Intent(mActivity, TaskActivity::class.java)
             //intent.putExtra("task", it)
             startActivity(intent)
         }
+    }
 
+    private fun setUpLessonsRecyclerView(lessons: ArrayList<Lesson>) {
+        val layoutManager = GridLayoutManager(mActivity, 2)
+        mLessonsAdapter = LessonsAdapter(lessons)
+        mBinding.lessonsRecyclerView.layoutManager = layoutManager
+        mBinding.lessonsRecyclerView.setHasFixedSize(true)
+        mBinding.lessonsRecyclerView.adapter = mLessonsAdapter
+
+        mLessonsAdapter.onItemClick = {
+            var intent = Intent(mActivity, LessonsActivity::class.java)
+            //intent.putExtra("lesson", it)
+            startActivity(intent)
+        }
     }
 
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -115,22 +147,6 @@ class HomeFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    fun setUpUncompletedTasksRecyclerView(task: List<Task>) {
-        val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
-        mUncompletedTasksAdapter = TasksAdapter(task)
-        mBinding.uncompletedTasksRecyclerView.layoutManager = layoutManager
-        mBinding.uncompletedTasksRecyclerView.setHasFixedSize(true)
-        mBinding.uncompletedTasksRecyclerView.adapter = mUncompletedTasksAdapter
-    }
-
-    private fun setUpLessonsRecyclerView(lessons: ArrayList<Lesson>) {
-        val layoutManager = GridLayoutManager(mActivity, 2)
-        mLessonsAdapter = LessonsAdapter(lessons)
-        mBinding.lessonsRecyclerView.layoutManager = layoutManager
-        mBinding.lessonsRecyclerView.setHasFixedSize(true)
-        mBinding.lessonsRecyclerView.adapter = mLessonsAdapter
     }
 
 }

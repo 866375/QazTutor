@@ -1,12 +1,13 @@
 package com.example.qaztutor.network
 
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BASE_URL = "https://opentdb.com/"
+    private const val BASE_URL = "https://qaztutor.herokuapp.com/api/"
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor { chain ->
             val original = chain.request()
@@ -23,8 +24,7 @@ object RetrofitClient {
     val instance: Api by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
 
         retrofit.create(Api::class.java)

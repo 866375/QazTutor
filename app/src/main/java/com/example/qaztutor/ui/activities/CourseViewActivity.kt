@@ -42,4 +42,5 @@ class CourseViewActivity : AppCompatActivity() {
         mBinding.courseViewRecyclerView.adapter = mCourseViewAdapter
 
     }
+
 }

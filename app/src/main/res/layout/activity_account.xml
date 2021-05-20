@@ -16,29 +16,224 @@
             layout="@layout/toolbar" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolBar"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toBottomOf="@id/toolBar">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="Account Activity"
-                android:textColor="@color/secondColor"
-                android:textSize="24sp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/toolBar"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    android:id="@+id/accountLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="48dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Account"
+                    android:textColor="@color/secondColor"
+                    android:textSize="36sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/avatarChangeImageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="24dp"
+                    android:src="@drawable/default_img"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/accountLabelTextView" />
+
+                <ImageView
+                    android:id="@+id/editerImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="48dp"
+                    android:layout_marginBottom="48dp"
+                    android:src="@drawable/editer_img"
+                    app:layout_constraintBottom_toBottomOf="@+id/avatarChangeImageView"
+                    app:layout_constraintStart_toStartOf="@+id/avatarChangeImageView" />
+
+                <TextView
+                    android:id="@+id/userNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="User"
+                    android:textColor="@color/secondColor"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@id/avatarChangeImageView"
+                    app:layout_constraintStart_toStartOf="@id/avatarChangeImageView"
+                    app:layout_constraintTop_toBottomOf="@id/avatarChangeImageView" />
+
+                <View
+                    android:id="@+id/dividerLine"
+                    android:layout_width="100dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/secondColor"
+                    app:layout_constraintEnd_toEndOf="@+id/userNameTextView"
+                    app:layout_constraintStart_toStartOf="@+id/userNameTextView"
+                    app:layout_constraintTop_toBottomOf="@id/userNameTextView" />
+
+                <TextView
+                    android:id="@+id/courseLevelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Your level is: 3"
+                    android:textColor="@color/secondColor"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/dividerLine"
+                    app:layout_constraintStart_toStartOf="@+id/dividerLine"
+                    app:layout_constraintTop_toBottomOf="@id/dividerLine" />
+
+                <TextView
+                    android:id="@+id/changeLoginLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="64dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Change login"
+                    android:textColor="@color/secondColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/courseLevelTextView" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/changeUserNameCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/changeLoginLabelTextView">
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <EditText
+                        android:id="@+id/chnageUserNameEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="48dp"
+                        android:background="@android:color/transparent"
+                        android:hint="Login"
+                        android:paddingVertical="8dp"
+                        android:textColorHint="#ADADD7"
+                        android:textSize="20sp" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/changePasswordLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Change Password"
+                    android:textColor="@color/secondColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/changeUserNameCardView" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/changePasswordCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/changePasswordLabelTextView">
+
+
+                    <EditText
+                        android:id="@+id/chnagePasswordNameEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="48dp"
+                        android:background="@android:color/transparent"
+                        android:hint="Password"
+                        android:paddingVertical="8dp"
+                        android:textColorHint="#ADADD7"
+                        android:textSize="20sp" />
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    android:id="@+id/repeatPasswordLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Repeat a new password"
+                    android:textColor="@color/secondColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/changePasswordCardView" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/repeatPasswordNameCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/repeatPasswordLabelTextView">
+
+
+                    <EditText
+                        android:id="@+id/repeatPasswordNameEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="48dp"
+                        android:background="@android:color/transparent"
+                        android:hint="Repeat a new password"
+                        android:paddingVertical="8dp"
+                        android:textColorHint="#ADADD7"
+                        android:textSize="20sp" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

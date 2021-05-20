@@ -10,9 +10,12 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qaztutor.MainActivity
 import com.example.qaztutor.R
+import com.example.qaztutor.adapters.AnswersAdapter
 import com.example.qaztutor.databinding.ActivityTaskBinding
+import com.example.qaztutor.models.Answer
 
 class TaskActivity : AppCompatActivity() {
 
@@ -67,5 +70,29 @@ class TaskActivity : AppCompatActivity() {
             true
         }
 
+        val answer = ArrayList<Answer>()
+        answer.add(Answer(false, "", "Жануарлар дүниесі "))
+        answer.add(Answer(false, "", "Мұз дәуірі"))
+        answer.add(Answer(false, "", "Құм көшкіні"))
+        answer.add(Answer(false, "", "Құстар дүниесі"))
+        answer.add(Answer(false, "", "Өсімдіктер дүниесі"))
+
+        setUpAnswersRecyclerView(answer)
+
+    }
+
+
+    private fun setUpAnswersRecyclerView(lessons: ArrayList<Answer>) {
+        val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
+        val mAnswersAdapter = AnswersAdapter(lessons)
+        mBinding.answersRecyclerView.layoutManager = layoutManager
+        mBinding.answersRecyclerView.setHasFixedSize(true)
+        mBinding.answersRecyclerView.adapter = mAnswersAdapter
+
+        mAnswersAdapter.onItemClick = {
+            Toast.makeText(mActivity, it.answer_body + "clicked", Toast.LENGTH_SHORT).show()
+            it.checked = true
+            mAnswersAdapter.notifyDataSetChanged()
+        }
     }
 }
