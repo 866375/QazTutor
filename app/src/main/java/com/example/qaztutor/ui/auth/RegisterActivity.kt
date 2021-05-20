@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.qaztutor.MainActivity
 import com.example.qaztutor.databinding.ActivityRegisterBinding
+import com.example.qaztutor.models.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -37,32 +39,61 @@ class RegisterActivity : AppCompatActivity() {
         })
 
         mBinding.registerBtn.setOnClickListener {
-            val email = mBinding.emailEditText.text.toString().trim()
-            val name = mBinding.nameEditText.text.toString().trim()
-            val password = mBinding.passwordEditText.text.toString().trim()
-            val repeatPassword = mBinding.repeatPasswordEditText.text.toString().trim()
+            mBinding.progressBar.visibility = View.VISIBLE
+            register()
 
-            if (email.isBlank() || name.isBlank() || password.isBlank() || repeatPassword.isBlank()) {
-                Toast.makeText(mActivity, "Registration failed", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (!password.equals(repeatPassword)) {
-                Toast.makeText(mActivity, "Passwords not matching", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    goMainActivity()
-                } else {
-                    Log.i(TAG, task.exception.toString())
-                    Toast.makeText(mActivity, "Registration failed from here", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
         }
 
+    }
+
+    private fun register() {
+        val email = mBinding.emailEditText.text.toString().trim()
+        val name = mBinding.nameEditText.text.toString().trim()
+        val password = mBinding.passwordEditText.text.toString().trim()
+        val repeatPassword = mBinding.repeatPasswordEditText.text.toString().trim()
+
+        if (email.isBlank() || name.isBlank() || password.isBlank() || repeatPassword.isBlank()) {
+            Toast.makeText(mActivity, "Registration failed", Toast.LENGTH_SHORT).show()
+            mBinding.progressBar.visibility = View.GONE
+            return
+        }
+
+        if (!password.equals(repeatPassword)) {
+            Toast.makeText(mActivity, "Passwords not matching", Toast.LENGTH_SHORT).show()
+            mBinding.progressBar.visibility = View.GONE
+            return
+        }
+
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                mBinding.progressBar.visibility = View.GONE
+                val user = User(email, name, password)
+                FirebaseDatabase.getInstance().getReference("Users")
+                    .child(mAuth.currentUser!!.uid)
+                    .setValue(user).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(mActivity, "Ready", Toast.LENGTH_SHORT).show()
+                            mBinding.progressBar.visibility = View.GONE
+                            goMainActivity()
+                        } else {
+                            Log.i(TAG, task.exception.toString())
+                            mBinding.progressBar.visibility = View.GONE
+                            Toast.makeText(
+                                mActivity,
+                                "Registration failed from here",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+
+                    }
+            } else {
+                Log.i(TAG, task.exception.toString())
+                mBinding.progressBar.visibility = View.GONE
+                Toast.makeText(mActivity, "Registration failed from here", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
     private fun goMainActivity() {

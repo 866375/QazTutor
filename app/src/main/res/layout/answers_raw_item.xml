@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    app:cardCornerRadius="8dp">
 
-    <ImageView
-        android:id="@+id/checkedImageView"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/quiz_pick_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/answerBodyTextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingVertical="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:fontFamily="@font/montserrat"
-        android:text="Жауарлар дүниесі"
-        android:textColor="@color/secondColor"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@id/checkedImageView"
-        app:layout_constraintLeft_toRightOf="@id/checkedImageView"
-        app:layout_constraintTop_toTopOf="@id/checkedImageView" />
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/checkedImageView"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/quiz_pick_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/answerBodyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Жауарлар дүниесі"
+            android:textColor="@color/secondColor"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/checkedImageView"
+            app:layout_constraintLeft_toRightOf="@id/checkedImageView"
+            app:layout_constraintTop_toTopOf="@id/checkedImageView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

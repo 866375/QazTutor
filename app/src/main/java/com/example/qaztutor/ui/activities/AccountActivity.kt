@@ -13,6 +13,9 @@ import androidx.core.view.GravityCompat
 import com.example.qaztutor.MainActivity
 import com.example.qaztutor.R
 import com.example.qaztutor.databinding.ActivityAccountBinding
+import com.example.qaztutor.models.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class AccountActivity : AppCompatActivity() {
 
@@ -30,6 +33,8 @@ class AccountActivity : AppCompatActivity() {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         mActivity = this
+
+        setUserName()
 
         mBinding.toolBar.navHam.setOnClickListener {
             mBinding.drawerLayout.openDrawer(Gravity.START)
@@ -63,5 +68,14 @@ class AccountActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    private fun setUserName() {
+        FirebaseDatabase.getInstance().getReference("Users")
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .get().addOnSuccessListener {
+                val user = it.getValue(User::class.java)
+                mBinding.toolBar.userNameTextView.setText(user!!.name)
+            }
     }
 }
