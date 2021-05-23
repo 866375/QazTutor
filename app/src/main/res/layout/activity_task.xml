@@ -19,7 +19,7 @@
             android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintTop_toBottomOf="@id/toolBar">
 
             <androidx.cardview.widget.CardView
@@ -27,8 +27,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:elevation="16dp"
+                android:layout_marginVertical="8dp"
+                android:elevation="18dp"
                 app:cardCornerRadius="7dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,22 +84,34 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/headerLayout">
+
+            <TextView
+                android:id="@+id/taskQuestionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:paddingHorizontal="16dp"
+                android:text="Осы мәтінді оқып, сұрақтарға жауап беріңіз"
+                android:textColor="@color/secondColor"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="267dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/taskQuestionTextView">
 
                 <TextView
                     android:id="@+id/contentTextView"
@@ -105,9 +119,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="text"
+                    android:text="Қазақстанда өсімдік дүниесінің 303 түрі Қызыл кітапқа енген және оның сақталуына мемлекеттік қорықтар қамқорлық жасайды. Қазақстанның кең жазиралы жазығында дала мен шөл өсімдіктері басым. Қазақстан дүние жүзі бойынша орманы аз елдердің қатарына жатады. Бүкіл аумағының 11, 4млн гектар жерін ғана ормандар алып жатыр. Ол табиғатты тазартуда, топырақты эрозиядан сақтап, құм көшкіндерін бөгеуде аса маңызды рөл атқарады. Шөлді аймақтарда сексеуіл, өзендер бойында жыңғыл, жиде, тораңғы тоғайлары кездеседі."
                     android:textColor="@color/secondColor"
-                    android:textSize="18sp">
+                    android:textSize="15sp">
 
 
                 </TextView>
@@ -131,9 +145,327 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline">
 
+            <TextView
+                android:id="@+id/anserwrsLabelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Your Answer:"
+                android:textColor="@color/secondColor"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/answersRecyclerView"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="0dp"-->
+            <!--                tools:listitem="@layout/answers_raw_item"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/anserwrsLabelTextView" />-->
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/anserwrsLabelTextView">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="6dp">
+
+                    <ImageView
+                        android:id="@+id/checkedImageView_1"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/quiz_pick_background"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/answerBodyTextView_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Жауарлар дүниесі"
+                        android:textColor="@color/secondColor"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="@id/checkedImageView_1"
+                        app:layout_constraintLeft_toRightOf="@id/checkedImageView_1"
+                        app:layout_constraintTop_toTopOf="@id/checkedImageView_1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/card1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="6dp">
+
+                    <ImageView
+                        android:id="@+id/checkedImageView_2"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/quiz_pick_background"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/answerBodyTextView_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Жауарлар дүниесі"
+                        android:textColor="@color/secondColor"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="@id/checkedImageView_2"
+                        app:layout_constraintLeft_toRightOf="@id/checkedImageView_2"
+                        app:layout_constraintTop_toTopOf="@id/checkedImageView_2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/card2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="6dp">
+
+                    <ImageView
+                        android:id="@+id/checkedImageView_3"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/quiz_pick_background"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/answerBodyTextView_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Жауарлар дүниесі"
+                        android:textColor="@color/secondColor"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="@id/checkedImageView_3"
+                        app:layout_constraintLeft_toRightOf="@id/checkedImageView_3"
+                        app:layout_constraintTop_toTopOf="@id/checkedImageView_3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/card3">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="6dp">
+
+                    <ImageView
+                        android:id="@+id/checkedImageView_4"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/quiz_pick_background"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/answerBodyTextView_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Жауарлар дүниесі"
+                        android:textColor="@color/secondColor"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="@id/checkedImageView_4"
+                        app:layout_constraintLeft_toRightOf="@id/checkedImageView_4"
+                        app:layout_constraintTop_toTopOf="@id/checkedImageView_4" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/nextBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/themeColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:src="@drawable/next_arrow" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/progressTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/montserrat"
+                    android:text="11/21"
+                    android:textColor="@color/secondColor"
+                    android:textSize="16sp" />
+
+            </androidx.cardview.widget.CardView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/resultLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#90E5E5E5"
+            android:visibility="gone">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/resultCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="64dp"
+                android:elevation="12dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/resultLabelTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Result"
+                        android:textColor="@color/secondColor"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/totalScoreTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="21/21"
+                        android:textColor="@color/secondColor"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="@id/resultLabelTextView"
+                        app:layout_constraintStart_toStartOf="@id/resultLabelTextView"
+                        app:layout_constraintTop_toBottomOf="@id/resultLabelTextView" />
+
+                    <TextView
+                        android:id="@+id/motivationLabelTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Nice work! Keep going."
+                        android:textColor="@color/secondColor"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="@+id/resultLabelTextView"
+                        app:layout_constraintStart_toStartOf="@+id/resultLabelTextView"
+                        app:layout_constraintTop_toBottomOf="@id/totalScoreTextView" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/finishBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:backgroundTint="@color/themeColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/motivationLabelTextView"
+                        app:layout_constraintStart_toStartOf="@+id/motivationLabelTextView"
+                        app:layout_constraintTop_toBottomOf="@id/motivationLabelTextView">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="64dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="FINISH"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

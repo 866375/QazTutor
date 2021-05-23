@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qaztutor.databinding.UnitRawBinding
-import com.example.qaztutor.models.TestUnit
+import com.example.qaztutor.models.Chapter
 
-class UnitAdapter(private val units: List<TestUnit>) :
+class UnitAdapter(private val units: List<Chapter>) :
     RecyclerView.Adapter<UnitAdapter.ViewHolder>() {
 
-    var onItemClick: ((TestUnit) -> Unit)? = null
+    var onItemClick: ((Chapter) -> Unit)? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,13 +30,14 @@ class UnitAdapter(private val units: List<TestUnit>) :
 
         val mActivity = mBinding.root.context
 
-        fun bind(unit: TestUnit) {
-            mBinding.unitNumberTextView.setText(unit.id)
+        fun bind(unit: Chapter) {
+            mBinding.unitNumberTextView.setText("${adapterPosition+1}")
             mBinding.unitTitleTextView.setText(unit.title)
         }
 
         init {
             mBinding.root.setOnClickListener {
+                units[adapterPosition].id = "${adapterPosition+1}"
                 onItemClick?.invoke(units[adapterPosition])
             }
         }
@@ -45,3 +46,4 @@ class UnitAdapter(private val units: List<TestUnit>) :
 
 
 }
+

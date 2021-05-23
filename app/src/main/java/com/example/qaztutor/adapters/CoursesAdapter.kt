@@ -28,7 +28,7 @@ class CoursesAdapter(private val courses: List<Course>) :
         RecyclerView.ViewHolder(mBinding.root) {
 
         fun bind(course: Course) {
-
+            mBinding.courseTitleTextView.setText(course.title)
         }
 
         init {

@@ -14,7 +14,10 @@ import androidx.core.view.GravityCompat
 import com.example.qaztutor.MainActivity
 import com.example.qaztutor.R
 import com.example.qaztutor.databinding.ActivityLessonViewBinding
-import com.example.qaztutor.models.TestUnit
+import com.example.qaztutor.models.Chapter
+import com.example.qaztutor.models.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class LessonViewActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityLessonViewBinding
@@ -31,6 +34,8 @@ class LessonViewActivity : AppCompatActivity() {
         mActivity = this
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        setUserName()
 
         mBinding.toolBar.navHam.setOnClickListener {
             mBinding.drawerLayout.openDrawer(Gravity.START)
@@ -70,10 +75,10 @@ class LessonViewActivity : AppCompatActivity() {
             true
         }
 
-        val testUnit = intent.getSerializableExtra("unit") as TestUnit
+        val testUnit = intent.getSerializableExtra("chapter") as Chapter
         mBinding.unitNumberTextView.setText(testUnit.id)
         mBinding.unitTitleTextView.setText(testUnit.title)
-        mBinding.contentTextView.setText(testUnit.text)
+        mBinding.contentTextView.setText(testUnit.content)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -89,6 +94,15 @@ class LessonViewActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun setUserName() {
+        FirebaseDatabase.getInstance().getReference("Users")
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .get().addOnSuccessListener {
+                val user = it.getValue(User::class.java)
+                mBinding.toolBar.userNameTextView.setText(user!!.name)
+            }
     }
 
 }

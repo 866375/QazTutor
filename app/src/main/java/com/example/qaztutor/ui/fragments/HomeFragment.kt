@@ -1,11 +1,14 @@
 package com.example.qaztutor.ui.fragments
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,12 +17,21 @@ import com.example.qaztutor.adapters.TasksAdapter
 import com.example.qaztutor.databinding.FragmentHomeBinding
 import com.example.qaztutor.models.Lesson
 import com.example.qaztutor.models.Task
+import com.example.qaztutor.network.RetrofitClient
 import com.example.qaztutor.ui.activities.LessonsActivity
 import com.example.qaztutor.ui.activities.TaskActivity
-import com.example.qaztutor.util.Constants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val TAG = "HomeFragment"
+private const val course_id = "1"
+private const val QUIZ_RESULT_CODE = 101
 
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -29,6 +41,8 @@ class HomeFragment : Fragment() {
     private lateinit var mActivity: Activity
     private lateinit var mLessonsAdapter: LessonsAdapter
     private lateinit var mUncompletedTasksAdapter: TasksAdapter
+    private lateinit var quiz_result: String
+
 
     override
 
@@ -55,57 +69,109 @@ class HomeFragment : Fragment() {
 
         //test data
         val test_task_data = ArrayList<Task>()
-        for (i: Int in 1..10) {
-            var task = Task()
-            if (i % 2 == 0) {
-                task.type = Constants.listening
-            } else {
-                task.type = Constants.grammar
-            }
-            task.title = "Task $i"
-            task.description = "Listen and answer"
-            task.completed = false
-            test_task_data.add(task)
-        }
-
-        setUpUncompletedTasksRecyclerView(test_task_data)
 
         //test data
         val test_lessons_data = ArrayList<Lesson>()
-        for (i: Int in 1..6) {
-            var lesson = Lesson()
-            lesson.type = Constants.listening
-            lesson.completed = false
-            lesson.title = "Listening"
-            test_lessons_data.add(lesson)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            RetrofitClient.instance.getLessons(course_id).enqueue(object : Callback<List<Lesson>> {
+                override fun onResponse(
+                    call: Call<List<Lesson>>,
+                    response: Response<List<Lesson>>
+                ) {
+                    if (response.isSuccessful) {
+                        for (lesson: Lesson in response.body()!!) {
+                            test_lessons_data.add(lesson)
+                        }
+                        var lesson = Lesson()
+                        lesson.title = "Сөз таптары"
+                        var lesson1 = Lesson()
+                        lesson1.title = "Сөз құрамы"
+                        test_lessons_data.add(lesson)
+                        test_lessons_data.add(lesson1)
+                        setUpLessonsRecyclerView(test_lessons_data)
+                    } else {
+                        Toast.makeText(mActivity, response.message() + "mynda", Toast.LENGTH_SHORT)
+                            .show()
+                        Log.i(TAG, "onResponse: ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Lesson>>, t: Throwable) {
+                    Toast.makeText(mActivity, t.message + "here", Toast.LENGTH_SHORT).show()
+                    Log.i(TAG, "onResponse: ${t.message}")
+                }
+
+            })
         }
 
-        setUpLessonsRecyclerView(test_lessons_data)
 
-        mLessonsAdapter.onItemClick = {
-            var intent = Intent(mActivity, LessonsActivity::class.java)
-            //intent.putExtra("lesson", it)
-            startActivity(intent)
+        GlobalScope.launch(Dispatchers.IO) {
+            RetrofitClient.instance.getTests(course_id).enqueue(object : Callback<List<Task>> {
+                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    if (response.isSuccessful) {
+                        var quizes = response.body()
+                        for (quiz: Task in quizes!!) {
+                            test_task_data.add(quiz)
+                        }
+                        setUpUncompletedTasksRecyclerView(test_task_data)
+                    } else {
+                        Toast.makeText(mActivity, response.message(), Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+                    Toast.makeText(mActivity, t.message, Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
-        mUncompletedTasksAdapter.onItemClick = {
-            var intent = Intent(mActivity, TaskActivity::class.java)
-            //intent.putExtra("task", it)
-            startActivity(intent)
-        }
 
     }
 
 
+    fun setUpUncompletedTasksRecyclerView(task: List<Task>) {
+        val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
+        mUncompletedTasksAdapter = TasksAdapter(task)
+        mBinding.uncompletedTasksRecyclerView.layoutManager = layoutManager
+        mBinding.uncompletedTasksRecyclerView.setHasFixedSize(true)
+        mBinding.uncompletedTasksRecyclerView.adapter = mUncompletedTasksAdapter
+
+        mUncompletedTasksAdapter.onItemClick = {
+            var intent = Intent(mActivity, TaskActivity::class.java)
+            intent.putExtra("task", it)
+            startActivityForResult(intent, QUIZ_RESULT_CODE)
+        }
+    }
+
+    private fun setUpLessonsRecyclerView(lessons: ArrayList<Lesson>) {
+        val layoutManager = GridLayoutManager(mActivity, 2)
+        mLessonsAdapter = LessonsAdapter(lessons)
+        mBinding.lessonsRecyclerView.layoutManager = layoutManager
+        mBinding.lessonsRecyclerView.setHasFixedSize(true)
+        mBinding.lessonsRecyclerView.adapter = mLessonsAdapter
+
+        mLessonsAdapter.onItemClick = {
+            var intent = Intent(mActivity, LessonsActivity::class.java)
+            intent.putExtra("lesson_id", it.id)
+            startActivity(intent)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == QUIZ_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    //result of quiz
+                    quiz_result = data.extras?.getString("quiz_result").toString()
+                    //Toast.makeText(mActivity, quiz_result, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -117,20 +183,5 @@ class HomeFragment : Fragment() {
             }
     }
 
-    fun setUpUncompletedTasksRecyclerView(task: List<Task>) {
-        val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
-        mUncompletedTasksAdapter = TasksAdapter(task)
-        mBinding.uncompletedTasksRecyclerView.layoutManager = layoutManager
-        mBinding.uncompletedTasksRecyclerView.setHasFixedSize(true)
-        mBinding.uncompletedTasksRecyclerView.adapter = mUncompletedTasksAdapter
-    }
-
-    private fun setUpLessonsRecyclerView(lessons: ArrayList<Lesson>) {
-        val layoutManager = GridLayoutManager(mActivity, 2)
-        mLessonsAdapter = LessonsAdapter(lessons)
-        mBinding.lessonsRecyclerView.layoutManager = layoutManager
-        mBinding.lessonsRecyclerView.setHasFixedSize(true)
-        mBinding.lessonsRecyclerView.adapter = mLessonsAdapter
-    }
 
 }

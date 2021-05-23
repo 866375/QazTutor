@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qaztutor.databinding.CourseViewRawItemBinding
 import com.example.qaztutor.models.Course
+import com.example.qaztutor.models.Lesson
 
-class CourseViewAdapter(private val courses: List<Course>) :
+class CourseViewAdapter(private val lessons: List<Lesson>) :
     RecyclerView.Adapter<CourseViewAdapter.ViewHolder>() {
 
-    var onItemClick: ((Course) -> Unit)? = null
+    var onItemClick: ((Lesson) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -18,23 +19,23 @@ class CourseViewAdapter(private val courses: List<Course>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(courses.get(position))
+        holder.bind(lessons.get(position))
     }
 
     override fun getItemCount(): Int {
-        return courses.size
+        return lessons.size
     }
 
     inner class ViewHolder(private val mBinding: CourseViewRawItemBinding) :
         RecyclerView.ViewHolder(mBinding.root) {
 
-        fun bind(course: Course) {
-
+        fun bind(course: Lesson) {
+            mBinding.lessonTitleTextView.setText(course.title)
         }
 
         init {
             mBinding.root.setOnClickListener {
-                onItemClick?.invoke(courses[adapterPosition])
+                onItemClick?.invoke(lessons[adapterPosition])
             }
         }
     }

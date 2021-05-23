@@ -33,15 +33,8 @@ class TasksAdapter(private val tasks: List<Task>) :
 
         @SuppressLint("ResourceAsColor")
         fun bind(task: Task) {
-            if (!task.completed) {
-                mBinding.taskTitleTextView.setText(task.title)
-                mBinding.taskDescriptionTextView.setText(task.description)
-//                if (task.type.equals(Constants.listening)) {
-//                    mBinding.cardView.setBackgroundResource(R.color.listening_background_color)
-//                } else if (task.type.equals(Constants.grammar)) {
-//                    mBinding.cardView.setBackgroundResource(R.color.grammar_background_color)
-//                }
-            }
+            mBinding.taskTitleTextView.text = "Task ${task.id}"
+            mBinding.taskDescriptionTextView.text = task.name
         }
 
         init {

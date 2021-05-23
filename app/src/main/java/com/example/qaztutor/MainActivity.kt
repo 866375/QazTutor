@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.qaztutor.databinding.ActivityMainBinding
+import com.example.qaztutor.models.User
 import com.example.qaztutor.ui.activities.AccountActivity
 import com.example.qaztutor.ui.auth.LoginActivity
 import com.example.qaztutor.ui.fragments.CoursesFragment
 import com.example.qaztutor.ui.fragments.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,10 +27,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mFirebaseDatabase: FirebaseDatabase
     private lateinit var mActivity: Activity
     private lateinit var mToggle: ActionBarDrawerToggle
     private lateinit var mToolbar: androidx.appcompat.widget.Toolbar
     private lateinit var mFragment: Fragment
+    private var emptyCurrentCourses = false
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,10 +45,10 @@ class MainActivity : AppCompatActivity() {
         mActivity = this
 
         mAuth = FirebaseAuth.getInstance()
-        checkUser()
+        mFirebaseDatabase = FirebaseDatabase.getInstance()
 
-        mBinding.toolBar.navHam.setOnClickListener {
-            mBinding.drawerLayout.openDrawer(Gravity.START)
+        if (checkUser()) {
+            setUserName()
         }
 
         if (intent.getStringExtra("fragment_id") == "home") {
@@ -57,6 +61,13 @@ class MainActivity : AppCompatActivity() {
             mFragment = HomeFragment()
             addFragmentToActivity(mFragment)
         }
+
+
+        mBinding.toolBar.navHam.setOnClickListener {
+            mBinding.drawerLayout.openDrawer(Gravity.START)
+        }
+
+
 
 
         mBinding.navView.setNavigationItemSelectedListener {
@@ -113,12 +124,14 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun checkUser() {
+    private fun checkUser(): Boolean {
         if (mAuth.currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+            return false
         }
+        return true
     }
 
     override fun onBackPressed() {
@@ -138,4 +151,12 @@ class MainActivity : AppCompatActivity() {
         mFragment = fragment
     }
 
+    private fun setUserName() {
+        FirebaseDatabase.getInstance().getReference("Users")
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .get().addOnSuccessListener {
+                val user = it.getValue(User::class.java)
+                mBinding.toolBar.userNameTextView.setText(user!!.name)
+            }
+    }
 }

@@ -29,20 +29,13 @@ class LessonsAdapter(private val lessons: List<Lesson>) :
         RecyclerView.ViewHolder(mBinding.root) {
 
         fun bind(lesson: Lesson) {
-//            if (lesson.type.equals(Constants.listening)) {
-//                Glide.with(mContext).load(R.drawable.listening_lesson_img)
-//                    .into(mBinding.lessonImageView)
-//            } else {
-//                // other conditions
-//            }
+            mBinding.lessonTitleTextView.text = lesson.title
 
             if (lesson.completed) {
                 mBinding.completedTextView.setText("Completed")
             } else {
                 mBinding.completedTextView.setText("In Progress")
             }
-
-            mBinding.lessonTitleTextView.setText("Listening")
         }
 
         init {

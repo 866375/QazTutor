@@ -36,17 +36,17 @@
             app:layout_constraintStart_toStartOf="@id/taskTitleTextView"
             app:layout_constraintTop_toBottomOf="@id/taskTitleTextView" />
 
-        <ImageView
-            android:id="@+id/typeImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:src="@drawable/listen_task_img"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/typeImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:layout_gravity="end"
+        android:src="@drawable/listen_task_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.cardview.widget.CardView>

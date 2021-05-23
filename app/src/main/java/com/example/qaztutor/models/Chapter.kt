@@ -2,9 +2,11 @@ package com.example.qaztutor.models
 
 import java.io.Serializable
 
-class TestUnit(
+class Chapter(
     var id: String = "",
     var title: String = "",
+    var passed: Boolean = false,
+    var content: String = "",
     var text: String = "\n" +
             "Фонетика - тіл білімінің дыбыстық жағын зерттейтін сала. Фонетика дыбыстардың жасалу, айтылу, естілу және буын, екпін, интонация мәселелерін қарастырады.\n" +
             "Қазақ әліпбиінде 42 әріп бар. Оның ішінде 9 әріп қазақ әріптері:  Ә, Ғ, Қ, Ң, Ө, Ұ, Ү, Һ, І\n" +
