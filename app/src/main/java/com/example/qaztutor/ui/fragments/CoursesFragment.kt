@@ -81,7 +81,7 @@ class CoursesFragment : Fragment() {
 
         mCoursesAdapter.onItemClick = {
             var intent = Intent(mActivity, CourseViewActivity::class.java)
-            intent.putExtra("course", it)
+            intent.putExtra("course_id", it.id)
             startActivity(intent)
         }
 

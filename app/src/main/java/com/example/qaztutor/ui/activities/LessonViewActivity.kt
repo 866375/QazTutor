@@ -14,7 +14,7 @@ import androidx.core.view.GravityCompat
 import com.example.qaztutor.MainActivity
 import com.example.qaztutor.R
 import com.example.qaztutor.databinding.ActivityLessonViewBinding
-import com.example.qaztutor.models.TestUnit
+import com.example.qaztutor.models.Chapter
 import com.example.qaztutor.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -75,10 +75,10 @@ class LessonViewActivity : AppCompatActivity() {
             true
         }
 
-        val testUnit = intent.getSerializableExtra("unit") as TestUnit
+        val testUnit = intent.getSerializableExtra("chapter") as Chapter
         mBinding.unitNumberTextView.setText(testUnit.id)
         mBinding.unitTitleTextView.setText(testUnit.title)
-        mBinding.contentTextView.setText(testUnit.text)
+        mBinding.contentTextView.setText(testUnit.content)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

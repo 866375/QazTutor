@@ -16,10 +16,17 @@ import com.example.qaztutor.MainActivity
 import com.example.qaztutor.R
 import com.example.qaztutor.adapters.UnitAdapter
 import com.example.qaztutor.databinding.ActivityLessonsBinding
-import com.example.qaztutor.models.TestUnit
+import com.example.qaztutor.models.Chapter
 import com.example.qaztutor.models.User
+import com.example.qaztutor.network.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LessonsActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityLessonsBinding
@@ -76,26 +83,55 @@ class LessonsActivity : AppCompatActivity() {
 
         mBinding.backImageView.setOnClickListener { onBackPressed() }
 
-        val test_unit = ArrayList<TestUnit>()
-        test_unit.add(TestUnit("1", "Фонетика"))
-        test_unit.add(TestUnit("2", "Буын және оның түрлері"))
-        test_unit.add(TestUnit("3", "Фонетикалық талдау"))
-        test_unit.add(TestUnit("4", "Тасымал"))
-        test_unit.add(TestUnit("5", "Үндестік заңы"))
-        test_unit.add(TestUnit("6", "Орфография "))
+        val chapters_list = ArrayList<Chapter>()
+//        test_unit.add(Chapter("1", "Фонетика"))
+//        test_unit.add(Chapter("2", "Буын және оның түрлері"))
+//        test_unit.add(Chapter("3", "Фонетикалық талдау"))
+//        test_unit.add(Chapter("4", "Тасымал"))
+//        test_unit.add(Chapter("5", "Үндестік заңы"))
+//        test_unit.add(Chapter("6", "Орфография "))
+
+        var lesson_id = intent.getStringExtra("lesson_id")
+
+        GlobalScope.launch(Dispatchers.IO) {
+            RetrofitClient.instance.getChapters(lesson_id!!)
+                .enqueue(object : Callback<List<Chapter>> {
+                    override fun onResponse(
+                        call: Call<List<Chapter>>,
+                        response: Response<List<Chapter>>
+                    ) {
+                        if (response.isSuccessful) {
+                            var chapters = response.body()
+                            for (chapter: Chapter in chapters!!) {
+                                chapters_list.add(chapter)
+                            }
+                            setUpRecyclerView(chapters_list)
+                        } else {
+                            Toast.makeText(mActivity, response.message(), Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<Chapter>>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+        }
+
+    }
+
+    fun setUpRecyclerView(data: List<Chapter>) {
         val layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
-        val unitAdapter = UnitAdapter(test_unit)
+        val unitAdapter = UnitAdapter(data)
         mBinding.unitRecyclerView.layoutManager = layoutManager
         mBinding.unitRecyclerView.setHasFixedSize(true)
         mBinding.unitRecyclerView.adapter = unitAdapter
 
         unitAdapter.onItemClick = {
             var intent = Intent(mActivity, LessonViewActivity::class.java)
-            intent.putExtra("unit", it)
+            intent.putExtra("chapter", it)
             startActivity(intent)
         }
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
